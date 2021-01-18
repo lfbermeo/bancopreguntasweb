@@ -36,10 +36,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				// Página de inicio sin login
 				.antMatchers("/registro").permitAll()
 				.antMatchers("/guardar_usuario").permitAll()
+				
 				.antMatchers("/profesor/**").hasRole("PROFESOR")
-				.antMatchers("/usuario/**").hasRole("PROFESOR")
-				.antMatchers("/administracion/**").hasRole("ADMINISTRADOR")
-				.antMatchers("/administrador/listar_usuarios").hasRole("ADMINISTRADOR")
 				.anyRequest()
 				.authenticated()
 				.and()

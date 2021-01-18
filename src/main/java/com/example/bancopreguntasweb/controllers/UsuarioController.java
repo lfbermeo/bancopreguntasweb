@@ -41,11 +41,17 @@ public class UsuarioController {
 				@RequestParam(value = "logout", required = false) String logout, Model model, Principal principal,
 				RedirectAttributes flash) {
 			System.out.println("entro login");
-			model.addAttribute("titulo", "Sistema de Gamificación 3D");
+			model.addAttribute("titulo", "Sistema de Gamificación");
 
 			if (principal != null) {
 				flash.addFlashAttribute("info", "Ya inicio sesión anteriormente");
-				return "redirect:/";
+			
+				Usuario actual_usuario = usuarioService.findByUsuario(principal.getName());
+				if(actual_usuario.getRol().equals("ROLE_PROFESOR")) {
+					return "redirect:/profesor/inicio_profesor";
+				}else if (actual_usuario.getRol().equals("ROLE_ADMINISTRADOR")){
+					return "redirect:/administrador/inicio_admin";
+				}
 			}
 
 			if (error != null) {

@@ -84,13 +84,6 @@ public class ProfesorController {
 		return vista;
 	}
 	
-	@RequestMapping("perfil")
-	public String perfil(@ModelAttribute("usuario") Usuario usuario, 
-			Map<String, Object> model) {
-		String vista = "profesor/perfil";
-		
-		return vista;
-	}
 	
 	
 	@RequestMapping(value = "guardar_bancopreguntas", method = RequestMethod.POST)
