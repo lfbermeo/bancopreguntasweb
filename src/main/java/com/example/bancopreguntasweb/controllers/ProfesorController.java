@@ -93,7 +93,8 @@ public class ProfesorController {
 	
 	
 	@RequestMapping(value = "guardar_bancopreguntas", method = RequestMethod.POST)
-	public String guardarBancoPreguntas(@ModelAttribute("bancopreguntas") BancoPreguntas bancopreguntas, Model model) {
+	public String guardarBancoPreguntas(@ModelAttribute("bancopreguntas") BancoPreguntas bancopreguntas, 
+			Map<String, Object> model) {
 	
 		
 		if(bancopreguntas.getIdbancopreguntas()!=null) {
@@ -113,11 +114,11 @@ public class ProfesorController {
 		
 
 		// objeto para visualizar en la vista
-		model.addAttribute("bancopreguntas", bancopreguntas);
+		model.put("bancopreguntas", bancoService.get(bancopreguntas.getIdbancopreguntas()));
 		List<Area> lsareas = areasService.listAll();
 		List<Carrera> lscarreras = carrerasService.listAll();
-		model.addAttribute("lsareas", lsareas);
-		model.addAttribute("lscarreras", lscarreras);
+		model.put("lsareas", lsareas);
+		model.put("lscarreras", lscarreras);
 		return "profesor/agregar_preguntas";
 	}
 	
