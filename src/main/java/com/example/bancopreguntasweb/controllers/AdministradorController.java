@@ -77,19 +77,48 @@ public class AdministradorController {
 	
 	
 	
-	// Actualizar usuario desde vista admin
+	// Actualizar usuario desde vista admin cualquier usuario
 	@RequestMapping(value = "actualizar_usuario", method = RequestMethod.POST)
 	public String actualizar_usuario(@ModelAttribute("usuario") Usuario usuario, Map<String, Object> model) {
 		String passactual = usuarioService.get(usuario.getIdusuario()).getPass();
+		
+		
+		
+		Usuario objNuevo1 = new Usuario();
+		objNuevo1.setIdusuario(usuario.getIdusuario());
+		objNuevo1.setNombres(usuario.getNombres());
+		objNuevo1.setApellidos(usuario.getApellidos());
+		objNuevo1.setEmail(usuario.getEmail());
+		objNuevo1.setRol(usuario.getRol());
+		objNuevo1.setUsuario(usuario.getUsuario());
+		
+		
 		if(usuario.getPass()=="") {
-			usuario.setPass(passactual);	
+			objNuevo1.setPass(passactual);	
 		}else {
-			usuario.setPass(encoder.encode(usuario.getPass()));
+			objNuevo1.setPass(encoder.encode(usuario.getPass()));
 		}
-		usuarioService.save(usuario);
-		model.put("usuario", usuario);
+		usuarioService.save(objNuevo1);
+		//model.put("usuario", usuario);
 		return "redirect:/administrador/gestion_usuarios";
 	}
+	
+	
+	
+	
+	// Actualizar usuario desde vista admin cuenta propia
+		@RequestMapping(value = "actualizar_admin", method = RequestMethod.POST)
+		public String actualizar_admin(@ModelAttribute("usuario") Usuario usuario, Map<String, Object> model) {
+			String passactual = usuarioService.get(usuario.getIdusuario()).getPass();
+			if(usuario.getPass()=="") {
+				usuario.setPass(passactual);	
+			}else {
+				usuario.setPass(encoder.encode(usuario.getPass()));
+			}
+			usuario.setRol("ROLE_ADMINISTRADOR");
+			usuarioService.save(usuario);
+			return "administrador/inicio_admin";
+		}
 	
 	
 	

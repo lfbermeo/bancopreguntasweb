@@ -84,6 +84,14 @@ public class ProfesorController {
 		return vista;
 	}
 	
+	@RequestMapping("perfil")
+	public String perfil(@ModelAttribute("usuario") Usuario usuario, 
+			Map<String, Object> model) {
+		String vista = "profesor/perfil";
+		
+		return vista;
+	}
+	
 	
 	@RequestMapping(value = "guardar_bancopreguntas", method = RequestMethod.POST)
 	public String guardarBancoPreguntas(@ModelAttribute("bancopreguntas") BancoPreguntas bancopreguntas, Model model) {
@@ -184,6 +192,20 @@ public class ProfesorController {
 		model.addAttribute("lscarreras", lscarreras);
 		return "profesor/agregar_preguntas";
 		
+	}
+	
+	
+	@RequestMapping(value = "actualizar_usuario", method = RequestMethod.POST)
+	public String actualizar_usuario(@ModelAttribute("usuario") Usuario usuario, Map<String, Object> model) {
+		String passactual = usuarioService.get(usuario.getIdusuario()).getPass();
+		if(usuario.getPass()=="") {
+			usuario.setPass(passactual);	
+		}else {
+			usuario.setPass(encoder.encode(usuario.getPass()));
+		}
+		usuario.setRol("ROLE_PROFESOR");
+		usuarioService.save(usuario);
+		return "profesor/inicio_profesor";
 	}
 	
 
