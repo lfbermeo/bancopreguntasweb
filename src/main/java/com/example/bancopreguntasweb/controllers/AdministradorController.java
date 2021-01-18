@@ -79,24 +79,22 @@ public class AdministradorController {
 	
 	// Actualizar usuario desde vista admin cualquier usuario
 	@RequestMapping(value = "actualizar_usuario", method = RequestMethod.POST)
-	public String actualizar_usuario(@ModelAttribute("usuario") Usuario usuario, Map<String, Object> model) {
-		String passactual = usuarioService.get(usuario.getIdusuario()).getPass();
-		
-		
+	public String actualizar_usuario(@ModelAttribute("usuario1") Usuario usuario1, Model model) {
+		String passactual = usuarioService.get(usuario1.getIdusuario()).getPass();
 		
 		Usuario objNuevo1 = new Usuario();
-		objNuevo1.setIdusuario(usuario.getIdusuario());
-		objNuevo1.setNombres(usuario.getNombres());
-		objNuevo1.setApellidos(usuario.getApellidos());
-		objNuevo1.setEmail(usuario.getEmail());
-		objNuevo1.setRol(usuario.getRol());
-		objNuevo1.setUsuario(usuario.getUsuario());
+		objNuevo1.setIdusuario(usuario1.getIdusuario());
+		objNuevo1.setNombres(usuario1.getNombres());
+		objNuevo1.setApellidos(usuario1.getApellidos());
+		objNuevo1.setEmail(usuario1.getEmail());
+		objNuevo1.setRol(usuario1.getRol());
+		objNuevo1.setUsuario(usuario1.getUsuario());
 		
 		
-		if(usuario.getPass()=="") {
+		if(usuario1.getPass()=="") {
 			objNuevo1.setPass(passactual);	
 		}else {
-			objNuevo1.setPass(encoder.encode(usuario.getPass()));
+			objNuevo1.setPass(encoder.encode(usuario1.getPass()));
 		}
 		usuarioService.save(objNuevo1);
 		//model.put("usuario", usuario);
@@ -172,8 +170,8 @@ public class AdministradorController {
 	
 	// ELIMINAR REGISTROS
 	@RequestMapping(value = "eliminar_usuario", method = RequestMethod.POST)
-	public String eliminar_usuario(@ModelAttribute("usuario") Usuario usuario, Model model) {
-		usuarioService.delete(usuario.getIdusuario());
+	public String eliminar_usuario(@ModelAttribute("usuario1") Usuario usuario1, Model model) {
+		usuarioService.delete(usuario1.getIdusuario());
 		return "redirect:/administrador/gestion_usuarios";
 	}
 	@RequestMapping(value = "eliminar_area", method = RequestMethod.POST)
