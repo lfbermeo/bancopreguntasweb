@@ -84,6 +84,12 @@ public class ProfesorController {
 		return vista;
 	}
 	
+	@RequestMapping("reportes")
+	public String reportes() {
+		String vista = "profesor/reportes";
+		return vista;
+	}
+	
 	
 	
 	@RequestMapping(value = "guardar_bancopreguntas", method = RequestMethod.POST)
