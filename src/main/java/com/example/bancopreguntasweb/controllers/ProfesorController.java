@@ -126,8 +126,8 @@ public class ProfesorController {
 			@ModelAttribute("usuario") Usuario usuario,
 			Map<String, Object> model) {
 		
-		Usuario usuarioObj = (Usuario) model.get("usuario");
-		Usuario objUsuario = usuarioService.findByUsuario(usuarioObj.getUsuario());
+		//Usuario usuarioObj = (Usuario) model.get("usuario");
+		//Usuario objUsuario = usuarioService.findByUsuario(usuarioObj.getUsuario());
 	
 		if(bancopreguntas.getIdbancopreguntas()!=null) {
 			bancopreguntas = bancoService.get(bancopreguntas.getIdbancopreguntas());
