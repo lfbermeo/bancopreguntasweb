@@ -137,21 +137,33 @@
                                <div class="form-group col-md-6 px-4">
                                    <div class="row px-2">
                                     <label class="col">Área</label>
-			<div class="input-group ">
-				<select  class="custom-select" name="area">
-				 	<option th:each="area: ${lsareas}" th:value="${area.idarea}" th:text="${area.nombre}"></option>
-				</select>
-			</div>
-                                   </div>
+								<div class="input-group ">
+									<select  class="custom-select" name="area" id="comboboxArea">
+									 	<option selected th:if="${area.idarea == bancopreguntas.carrera.getArea.getIdarea}" th:each="area: ${lsareas}" th:value="${area.idarea}" th:text="${area.nombre}"></option>
+										<option th:unless="${area.idarea == bancopreguntas.carrera.getArea.getIdarea}" th:each="area: ${lsareas}" th:value="${area.idarea}" th:text="${area.nombre}"></option>
+									
+									
+									</select>
+								</div>
+					                                   </div>
                                </div>
                                <div class="form-group col-md-6 px-4">
                                    <div class="row px-2">
                                         <label class="col">Carrera</label>
-			<div class="input-group ">
-				<select  class="custom-select" name="carrera">
-				 	<option th:each="carrera: ${lscarreras}" th:value="${carrera.idcarrera}" th:text="${carrera.nombre}"></option>
-				</select>
-			</div>
+								<div class="input-group ">
+									<select  class="custom-select" name="carrera" id="comboboxCarrera">
+									 
+									<option th:if="${carrera.area.getIdarea == bancopreguntas.carrera.getArea.getIdarea && carrera.idcarrera == bancopreguntas.carrera.getIdcarrera }" 
+									th:each="carrera: ${lscarreras}" th:value="${carrera.idcarrera}" th:text="${carrera.nombre}" selected></option>
+									
+									<option th:if="${carrera.area.getIdarea == bancopreguntas.carrera.getArea.getIdarea && carrera.idcarrera != bancopreguntas.carrera.getIdcarrera }" 
+									th:each="carrera: ${lscarreras}" th:value="${carrera.idcarrera}" th:text="${carrera.nombre}"></option>
+									
+									
+									
+
+									</select>
+								</div>
                                    </div>
                                    
                                </div>
@@ -189,5 +201,28 @@
     
     
      <footer th:replace="fragments/footer:: footer" > </footer>
+     
+     <script type="text/javascript">
+     
+     $(document).ready(function(){
+
+    		$('#comboboxArea').on('change', function(){
+    			var carreraId = $(this).val();
+    			$.ajax({
+    				type: 'GET',
+    				url: '/profesor/loadCarrerasByArea/' + carreraId,
+    				success: function(result) {
+    					var result = JSON.parse(result);
+    					var s = '';
+    					var option='<option value="0">---</option>';
+    					for(var i = 0; i < result.length; i++) {
+    						s += '<option value="' + result[i].idcarrera + '">' + result[i].nombre + '</option>';
+    					}
+    					$('#comboboxCarrera').html(s);
+    				}
+    			});
+    		});
+    	});
+     </script>
   </body>
 </html>
