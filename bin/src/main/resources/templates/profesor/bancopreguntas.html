@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  
+  <head th:replace="fragments/head :: head">
+  <body>
+    <header th:replace="fragments/header :: header" > </header>
+    <nav th:replace="fragments/nav_fragment :: nav_profesor"></nav>
+    
+
+    <div class="container">
+    
+   <div id="registro">
+      	 <h2>Crear Nuevo Banco de Preguntas</h2>
+      	 <form method="post" th:action="@{guardar_bancopreguntas}">
+      	 <input name="usuario" type="hidden" th:value="${usuario.idusuario}">
+			   
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+					<label class="col">Área</label>
+					<div class="input-group ">
+							<select onchange="actualizar_combo()"  class="custom-select" name="area">
+							 	<option th:each="area: ${lsareas}" th:value="${area.idarea}" th:text="${area.nombre}"></option>
+							</select>
+					</div>
+				</div>
+			    <div class="form-group col-md-6">
+					<label class="col">Carrera</label>
+					<div class="input-group ">
+							<select  class="custom-select" name="carrera">
+							 	<option th:each="carrera: ${lscarreras}" th:value="${carrera.idcarrera}" th:text="${carrera.nombre}"></option>
+							</select>
+					</div>
+				</div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label>Asignatura</label>
+			      <input name="asignatura" type="text" class="form-control" placeholder="Ingrese la asignatura del cuestionario">
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label>Tema</label>
+			      <input name="tema" type="text" class="form-control" placeholder="Ingrese el tema del cuestionario">
+			    </div>
+			  </div>
+			  
+			  <div class="text-center">
+				  <button type="submit" class="btn btn-primary">Crear Banco de Preguntas</button>
+			  </div>
+			  
+			</form>
+      	 
+      	 
+       </div>
+       
+    </div>
+    
+    
+     <footer th:replace="fragments/footer:: footer" > </footer>
+     
+      <script th:inline="javascript">
+      
+      var areas = [[${ lsareas }]];
+	     function actualizar_combo(){
+	    	 alert("cambiaste");
+	    	 alert(areas[1].idarea);
+	    	 alert(areas[1].nombre);
+
+	    
+	    		
+	    	}
+     
+     </script>
+  </body>
+</html>
