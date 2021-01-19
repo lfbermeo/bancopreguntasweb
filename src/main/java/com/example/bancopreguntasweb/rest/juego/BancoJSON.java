@@ -4,6 +4,7 @@ import java.util.List;
 
 public class BancoJSON {
 	
+	private int idbancopreguntas;
 	private String codigo;
 	private String tema;
 	private String area;
@@ -15,14 +16,24 @@ public class BancoJSON {
 
 	}
 	
-	public BancoJSON(String codigo, String tema, String area, String carrera, List<PreguntaJSON> lspreguntas) {
+	public BancoJSON(int idbancopreguntas,String codigo, String tema, String area, String carrera, List<PreguntaJSON> lspreguntas) {
 		super();
+		this.idbancopreguntas = idbancopreguntas;
 		this.codigo = codigo;
 		this.tema = tema;
 		this.area = area;
 		this.carrera = carrera;
 		this.lspreguntas = lspreguntas;
 	}
+	
+	public int getIdbancopreguntas() {
+		return idbancopreguntas;
+	}
+
+	public void setIdbancopreguntas(int idbancopreguntas) {
+		this.idbancopreguntas = idbancopreguntas;
+	}
+
 	public String getCodigo() {
 		return codigo;
 	}

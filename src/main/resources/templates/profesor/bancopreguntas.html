@@ -20,7 +20,7 @@
 			    <div class="form-group col-md-6">
 					<label class="col">Área</label>
 					<div class="input-group ">
-							<select  class="custom-select" name="area">
+							<select onchange="actualizar_combo()"  class="custom-select" name="area">
 							 	<option th:each="area: ${lsareas}" th:value="${area.idarea}" th:text="${area.nombre}"></option>
 							</select>
 					</div>
@@ -58,5 +58,19 @@
     
     
      <footer th:replace="fragments/footer:: footer" > </footer>
+     
+      <script th:inline="javascript">
+      
+      var areas = [[${ lsareas }]];
+	     function actualizar_combo(){
+	    	 alert("cambiaste");
+	    	 alert(areas[1].idarea);
+	    	 alert(areas[1].nombre);
+
+	    
+	    		
+	    	}
+     
+     </script>
   </body>
 </html>

@@ -1,5 +1,7 @@
 package com.example.bancopreguntasweb.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +20,15 @@ import com.example.bancopreguntasweb.models.entities.Area;
 import com.example.bancopreguntasweb.models.entities.BancoPreguntas;
 import com.example.bancopreguntasweb.models.entities.Carrera;
 import com.example.bancopreguntasweb.models.entities.Pregunta;
+import com.example.bancopreguntasweb.models.entities.Respuestas;
 import com.example.bancopreguntasweb.models.entities.Usuario;
 import com.example.bancopreguntasweb.models.services.implementation.AreaServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.BancoPreguntasServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.CarreraServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.PreguntaServiceImpl;
+import com.example.bancopreguntasweb.models.services.implementation.RespuestasServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.UsuarioServiceImpl;
+import com.example.bancopreguntasweb.rest.juego.BancoJSON;
 
 import net.bytebuddy.utility.RandomString;
 
@@ -54,6 +59,9 @@ public class ProfesorController {
 	@Autowired
 	private PreguntaServiceImpl preguntaService;
 	
+	@Autowired
+	private RespuestasServiceImpl respuestasService;
+	
 	@RequestMapping("inicio_profesor")
 	public String inicio_profesor() {
 		String vista = "profesor/inicio_profesor";
@@ -66,8 +74,29 @@ public class ProfesorController {
 		List<Area> lsareas = areasService.listAll();
 		List<Carrera> lscarreras = carrerasService.listAll();
 		
-		model.addAttribute("lsareas", lsareas);
-		model.addAttribute("lscarreras", lscarreras);
+		
+		
+		List<HashMap<String, String>> listaareas = new ArrayList<HashMap<String,String>>();
+		for(Area a: lsareas) {
+			HashMap<String, String> area = new HashMap<String, String>();
+			area.put("idarea", a.getIdarea().toString());
+			area.put("nombre", a.getNombre());
+			listaareas.add(area);
+		}
+		
+		List<HashMap<String, String>> listacarreras = new ArrayList<HashMap<String,String>>();
+		for(Carrera c: lscarreras) {
+			HashMap<String, String> carrera = new HashMap<String, String>();
+			carrera.put("idcarrera", c.getIdcarrera().toString());
+			carrera.put("nombre", c.getNombre());
+			carrera.put("idarea", c.getArea().getIdarea().toString());
+			listacarreras.add(carrera);
+		}
+	
+		
+
+		model.addAttribute("lsareas", listaareas);
+		model.addAttribute("lscarreras", listacarreras);
 		return vista;
 	}
 	
@@ -85,8 +114,25 @@ public class ProfesorController {
 	}
 	
 	@RequestMapping("reportes")
-	public String reportes() {
+	public String reportes(@ModelAttribute("usuario") Usuario usuario, 
+			Map<String, Object> model) {
 		String vista = "profesor/reportes";
+		
+		Usuario usuarioObj = (Usuario) model.get("usuario");
+		Usuario obj = usuarioService.findByUsuario(usuarioObj.getUsuario());
+		List<BancoPreguntas> lsbancos = bancoService.findByUsuario(obj);
+		
+		model.put("lsbancos", lsbancos);
+		return vista;
+	}
+	@RequestMapping("ver_reporte")
+	public String ver_reporte(@ModelAttribute("bancopreguntas") BancoPreguntas bancopreguntas, 
+			Map<String, Object> model) {
+		String vista = "profesor/ver_reporte";
+				
+		BancoPreguntas banco = bancoService.get(bancopreguntas.getIdbancopreguntas());
+		
+		model.put("bancopreguntas", banco);
 		return vista;
 	}
 	
@@ -206,6 +252,19 @@ public class ProfesorController {
 		usuario.setRol("ROLE_PROFESOR");
 		usuarioService.save(usuario);
 		return "profesor/inicio_profesor";
+	}
+	
+	
+	@RequestMapping(value = "eliminar_respuestas", method = RequestMethod.POST)
+	public String eliminar_bancopreguntas(@ModelAttribute("respuestas") Respuestas respuestas,
+			Model model) {
+		
+		Respuestas res = respuestasService.get(respuestas.getIdrespuestas());
+		
+		model.addAttribute("bancopreguntas", bancoService.get(res.getBancopreguntas().getIdbancopreguntas()));
+		respuestasService.delete(respuestas.getIdrespuestas());
+
+		return "profesor/ver_reporte";
 	}
 	
 

@@ -32,6 +32,7 @@ public class JuegoQueries {
 		
 		BancoPreguntas objBanco = service_bancoPreguntas.findByCodigo(codigo);
 		
+		objJSONBanco.setIdbancopreguntas(objBanco.getIdbancopreguntas());
 		objJSONBanco.setCodigo(objBanco.getCodigo());
 		objJSONBanco.setTema(objBanco.getTema());
 		objJSONBanco.setArea(objBanco.getCarrera().getArea().getNombre());
