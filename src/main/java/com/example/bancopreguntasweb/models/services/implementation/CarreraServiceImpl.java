@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.bancopreguntasweb.models.dao.ICarreraRepository;
 
 import com.example.bancopreguntasweb.models.entities.Carrera;
-
+import com.example.bancopreguntasweb.models.entities.CarreraEntidad;
 import com.example.bancopreguntasweb.models.services.interfaces.ICarreraService;
 
 @Service
@@ -40,5 +40,11 @@ public class CarreraServiceImpl implements ICarreraService{
 		repo.deleteById(id);
 		
 	}
+
+	@Override
+	public List<CarreraEntidad> findByArea(int id) {
+		return repo.findByArea(id);
+	}
+
 
 }
