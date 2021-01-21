@@ -56,6 +56,7 @@ public class AdministradorController {
 		//Enviar la lista de usuarios
 		List<Usuario> lsusuarios = usuarioService.listAll();
 		model.addAttribute("lsusuarios", lsusuarios);
+		
 		return vista;
 	}
 	
