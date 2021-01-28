@@ -20,8 +20,12 @@ public class JuegoRest {
 	@Autowired
 	JuegoQueries queriesJuego;
 
-	@RequestMapping("/bancopreguntas/{codigo}")
+	/*@RequestMapping("/bancopreguntas/{codigo}")
 	public HashMap<String, BancoJSON> obtenerBancoPreguntas(@PathVariable(value = "codigo") String codigo) {
+		return queriesJuego.obtenerBancoPreguntas(codigo);
+	}*/
+	@RequestMapping("/bancopreguntas/{codigo}")
+	public BancoJSON obtenerBancoPreguntas(@PathVariable(value = "codigo") String codigo) {
 		return queriesJuego.obtenerBancoPreguntas(codigo);
 	}
 }
