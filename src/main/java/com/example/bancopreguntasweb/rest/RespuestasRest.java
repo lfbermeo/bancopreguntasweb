@@ -67,7 +67,7 @@ public class RespuestasRest {
 			obj.setPuntaje(puntaje);
 			obj.setRescorrectas(rescorrectas);
 			obj.setResincorrectas(resincorrectas);
-			//obj.setBancopreguntas(serviceBanco.get(idbancopreguntas));
+			obj.setBancopreguntas(serviceBanco.get(idbancopreguntas));
 			service.save(obj);
 			
 		
