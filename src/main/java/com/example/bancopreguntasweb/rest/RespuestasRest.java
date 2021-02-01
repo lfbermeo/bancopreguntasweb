@@ -57,7 +57,7 @@ public class RespuestasRest {
 		
 		@PostMapping("/registrarespuesta")
 		public void registrarUsuario(@RequestParam(name="nombreJugador", required=false) String nombreJugador, 
-				@RequestParam(name="puntaje", required=false) double puntaje,
+				@RequestParam(name="puntaje", required=false) Double puntaje,
 				@RequestParam(name="rescorrectas", required=false) int rescorrectas, 
 				@RequestParam(name="resincorrectas", required=false) int resincorrectas, 
 	    		@RequestParam(name="idbancopreguntas", required=false) int idbancopreguntas,
