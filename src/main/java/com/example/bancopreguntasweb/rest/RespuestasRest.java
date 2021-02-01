@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.BeaconUtpl.Models.Usuario;
 import com.example.bancopreguntasweb.models.entities.Respuestas;
 import com.example.bancopreguntasweb.models.services.implementation.BancoPreguntasServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.RespuestasServiceImpl;
