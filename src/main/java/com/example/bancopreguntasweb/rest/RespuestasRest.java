@@ -1,20 +1,24 @@
 package com.example.bancopreguntasweb.rest;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.example.BeaconUtpl.Models.Usuario;
 import com.example.bancopreguntasweb.models.entities.Respuestas;
+import com.example.bancopreguntasweb.models.services.implementation.BancoPreguntasServiceImpl;
 import com.example.bancopreguntasweb.models.services.implementation.RespuestasServiceImpl;
 
 @CrossOrigin("*")
@@ -24,6 +28,8 @@ public class RespuestasRest {
 	
 	@Autowired
 	private RespuestasServiceImpl service;
+	@Autowired
+	private BancoPreguntasServiceImpl serviceBanco;
 	
 	// Listar 
 		@RequestMapping("/listarrespuestas")
@@ -47,6 +53,30 @@ public class RespuestasRest {
 		public void guardar(@RequestBody Respuestas respuesta) {
 			service.save(respuesta);
 		}
+		
+		
+		@PostMapping("/registrarespuesta")
+		public void registrarUsuario(@RequestParam(name="nombreJugador", required=false) String nombreJugador, 
+				@RequestParam(name="puntaje", required=false) double puntaje,
+				@RequestParam(name="rescorrectas", required=false) int rescorrectas, 
+				@RequestParam(name="resincorrectas", required=false) int resincorrectas, 
+	    		@RequestParam(name="idbancopreguntas", required=false) int idbancopreguntas,
+	    		Model model) throws InterruptedException, ExecutionException {
+			Respuestas obj = new Respuestas();
+			obj.setNombreJugador(nombreJugador);
+			obj.setPuntaje(puntaje);
+			obj.setRescorrectas(rescorrectas);
+			obj.setResincorrectas(resincorrectas);
+			obj.setBancopreguntas(serviceBanco.get(idbancopreguntas));
+			service.save(obj);
+			
+		
+		}
+		
+		
+		
+		
+		
 
 		// Eliminar registro 
 		@GetMapping("/eliminarrespuestas/{id}")
