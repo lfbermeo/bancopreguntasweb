@@ -50,6 +50,7 @@ public class RespuestasRest {
 	// Guardar y actualizar
 		@PostMapping("/guardarrespuestas")
 		public void guardar(@RequestBody Respuestas respuesta) {
+			respuesta.setBancopreguntas(serviceBanco.get(respuesta.getBancopreguntas().getIdbancopreguntas()));
 			service.save(respuesta);
 		}
 		
